@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'react-native-testing-library';
+import { render, fireEvent, waitForElement } from 'react-native-testing-library';
 import HorizontalPicker from './index';
 
 describe('horizontal-picker', () => {
@@ -19,4 +19,13 @@ describe('horizontal-picker', () => {
     );
   });
 
+  it('displays the selected value', async () => {
+
+    const {getByTestId, getByText} = render(<HorizontalPicker min={1} max={5} />);
+    console.log(getByText('3').parent);
+
+    const tacos = await waitForElement(() => getByText('3'));
+    fireEvent.press(getByText('3').parent);
+    //expect(getByTestId('number')).toEqual('4');
+  });
 });
