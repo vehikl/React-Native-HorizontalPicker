@@ -7,9 +7,14 @@ export default function HorizontalPicker(props) {
   const length = max - min + 1;
   const range = new Array(length).fill().map((_, index) => index + min);
 
+  function updateSelectedNumber(item) {
+    setSelectedNumber(item);
+    props.onChange(item);
+  }
+
   function renderItem({ item }) {
     return (
-      <TouchableHighlight onPress={() => setSelectedNumber(item)}>
+      <TouchableHighlight onPress={() => updateSelectedNumber(item)}>
         <Text style={{ padding: 3 }}>{item}</Text>
       </TouchableHighlight>
     );
@@ -28,3 +33,6 @@ export default function HorizontalPicker(props) {
   )
 }
 
+HorizontalPicker.defaultProps = {
+  onChange: () => { },
+};
