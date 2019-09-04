@@ -1,4 +1,10 @@
 import React from 'react';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  View } from 'react-native';
 import { render, fireEvent, waitForElement } from 'react-native-testing-library';
 import HorizontalPicker from './index';
 
@@ -20,12 +26,23 @@ describe('horizontal-picker', () => {
   });
 
   it('displays the selected value', async () => {
+    const { getByTestId, getByText } = render(<HorizontalPicker min={1} max={5} />);
+    const number = getByText('3');
 
-    const {getByTestId, getByText} = render(<HorizontalPicker min={1} max={5} />);
-    console.log(getByText('3').parent);
+    fireEvent.press(number);
+    const selectedNumber = getByTestId('number');
+    expect(selectedNumber.props.children).toBe(3);
+  });
 
-    const tacos = await waitForElement(() => getByText('3'));
-    fireEvent.press(getByText('3').parent);
-    //expect(getByTestId('number')).toEqual('4');
+  it('changes the selected value when another item is selected', async () => {
+    const { getByTestId, getByText } = render(<HorizontalPicker min={1} max={5} />);
+
+    fireEvent.press(getByText('3'));
+    let selectedNumber = getByTestId('number');
+    expect(selectedNumber.props.children).toBe(3);
+
+    fireEvent.press(getByText('4'));
+    selectedNumber = getByTestId('number');
+    expect(selectedNumber.props.children).toBe(4);
   });
 });
