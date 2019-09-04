@@ -47,18 +47,18 @@ describe('horizontal-picker', () => {
   });
 
   it('calls onChange prop when a selected value changes', () => {
-    const onChange = jest.fn();
-    const { getByText } = render(<HorizontalPicker min={1} max={5} onChange={onChange} />);
+    const onValueChange = jest.fn();
+    const { getByText } = render(<HorizontalPicker min={1} max={5} onValueChange={onValueChange} />);
 
     fireEvent.press(getByText('3'));
-    expect(onChange).toHaveBeenCalled();
+    expect(onValueChange).toHaveBeenCalled();
   });
 
   it('calls onChange with the correct value', () => {
-    const onChange = jest.fn();
-    const { getByText } = render(<HorizontalPicker min={1} max={5} onChange={onChange} />);
+    const onValueChange = jest.fn();
+    const { getByText } = render(<HorizontalPicker min={1} max={5} onValueChange={onValueChange} />);
 
     fireEvent.press(getByText('3'));
-    expect(onChange).toHaveBeenCalledWith(3);
+    expect(onValueChange).toHaveBeenCalledWith(3);
   });
 });

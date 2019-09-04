@@ -9,7 +9,7 @@ export default function HorizontalPicker(props) {
 
   function updateSelectedNumber(item) {
     setSelectedNumber(item);
-    props.onChange(item);
+    props.onValueChange(item);
   }
 
   function renderItem({ item }) {
@@ -34,5 +34,5 @@ export default function HorizontalPicker(props) {
 }
 
 HorizontalPicker.defaultProps = {
-  onChange: () => { },
+  onValueChange: () => { },
 };
