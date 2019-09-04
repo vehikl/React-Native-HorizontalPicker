@@ -36,13 +36,12 @@ describe('horizontal-picker', () => {
 
   it('changes the selected value when another item is selected', async () => {
     const { getByTestId, getByText } = render(<HorizontalPicker min={1} max={5} />);
+    const selectedNumber = getByTestId('number');
 
     fireEvent.press(getByText('3'));
-    let selectedNumber = getByTestId('number');
     expect(selectedNumber.props.children).toBe(3);
 
     fireEvent.press(getByText('4'));
-    selectedNumber = getByTestId('number');
     expect(selectedNumber.props.children).toBe(4);
   });
 
