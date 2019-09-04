@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, TouchableHighlight } from 'react-native'
+import { View, Text, FlatList, TouchableHighlight, StyleSheet } from 'react-native'
 
 export default function HorizontalPicker(props) {
   const [selectedNumber, setSelectedNumber] = useState(props.initialValue);
@@ -21,8 +21,8 @@ export default function HorizontalPicker(props) {
   }
 
   return (
-    <View style={{ width: '100%' }}>
-      <Text testID="number">{selectedNumber}</Text>
+    <View style={styles.container}>
+      <Text style={styles.selectedItem} testID="number">{selectedNumber}</Text>
       <FlatList
         horizontal
         keyExtractor={(item, index) => `${item}-${index}`}
@@ -32,6 +32,15 @@ export default function HorizontalPicker(props) {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+  },
+  selectedItem: {
+
+  },
+});
 
 HorizontalPicker.defaultProps = {
   onValueChange: () => { },
