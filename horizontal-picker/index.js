@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, FlatList, TouchableHighlight } from 'react-native'
 
 export default function HorizontalPicker(props) {
-  const [selectedNumber, setSelectedNumber] = useState();
+  const [selectedNumber, setSelectedNumber] = useState(props.initialValue);
   const { min, max } = props;
   const length = max - min + 1;
   const range = new Array(length).fill().map((_, index) => index + min);

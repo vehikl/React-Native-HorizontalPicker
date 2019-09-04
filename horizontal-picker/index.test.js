@@ -52,4 +52,18 @@ describe('horizontal-picker', () => {
     fireEvent.press(getByText('3'));
     expect(onValueChange).toHaveBeenCalledWith(3);
   });
+
+  it('displays the initial value on render', () => {
+    const initialValue = 2;
+    const { getByTestId } = render(
+      <HorizontalPicker
+        min={1}
+        max={5}
+        initialValue={initialValue}
+      />
+    );
+
+    const selectedNumber = getByTestId('number')
+    expect(selectedNumber.props.children).toBe(initialValue)
+  })
 });
