@@ -13,15 +13,15 @@ export default function HorizontalPicker(props) {
   }
 
   function renderItem({ item }) {
-    let tacos;
+    let indicatorArrow;
     if (item === selectedNumber) {
-      tacos = (<Text>^</Text>);
+      indicatorArrow = (<Text>^</Text>);
     }
 
     return (
       <TouchableHighlight onPress={() => updateSelectedNumber(item)}>
         <View style={styles.numberDisplay}>
-          {tacos}
+          {indicatorArrow}
           <Text style={styles.numberText}>{item}</Text>
           <Text>|</Text>
         </View>
@@ -37,6 +37,7 @@ export default function HorizontalPicker(props) {
     <View style={styles.container}>
       <View style={styles.selectionContainer}>
         <Text style={styles.selectedItem} testID="number">{selectedNumber}</Text>
+        <Text style={styles.selectedLine} >|</Text>
       </View>
       <FlatList
         horizontal
