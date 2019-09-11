@@ -37,7 +37,7 @@ export default function HorizontalPicker(props) {
     <View style={styles.container}>
       <View style={styles.selectionContainer}>
         <Text style={styles.selectedItem} testID="number">{selectedNumber}</Text>
-        <Text style={styles.selectedLine} >|</Text>
+        <Text style={styles.centerLine} >|</Text>
       </View>
       <FlatList
         horizontal
@@ -45,7 +45,7 @@ export default function HorizontalPicker(props) {
         data={range}
         renderItem={renderItem}
         getItemLayout={(data, index) => (
-          { length: 60, offset: 60 * index, index }
+          { length: 60, offset: 64 * index, index }
         )}
         initialScrollIndex={getInitialScrollIndex()}
       />
@@ -74,14 +74,22 @@ const styles = StyleSheet.create({
   },
   selectionContainer: {
     width: '100%',
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'center',
+    alignItems: 'center',
+
   },
   selectedItem: {
-    padding: 100,
+    paddingTop: 80,
     fontSize: 60,
     color: 'white',
     fontWeight: '800',
+  },
+  centerLine: {
+    paddingBottom: 50,
+    color: 'white',
+    fontWeight: '100',
+    fontSize: 120,
   },
 });
 
