@@ -1,12 +1,14 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, FlatList, TouchableHighlight, StyleSheet } from 'react-native'
+
+const LIST_OFFSET = 180;
+const ITEM_WIDTH = 60;
 
 export default function HorizontalPicker(props) {
   const [selectedNumber, setSelectedNumber] = useState(props.initialValue);
   const { min, max } = props;
   const length = max - min + 1;
   const range = new Array(length).fill().map((_, index) => index + min);
-  const itemWidth = 60;
 
   const flatListRef = useRef(null);
 
@@ -16,7 +18,7 @@ export default function HorizontalPicker(props) {
     const index = range.findIndex((number) => number === foo.item);
 
     if (flatListRef.current) {
-      flatListRef.current.scrollToIndex({index, viewPosition: 0.5});
+      flatListRef.current.scrollToIndex({ index, viewPosition: 0.5});
     }
   }
 
@@ -38,8 +40,10 @@ export default function HorizontalPicker(props) {
   }
 
   function getInitialScrollIndex() {
-    return range.findIndex((item) => item === props.initialValue - 3);
+    return range.findIndex((item) => item === props.initialValue);
   }
+
+  const flatlistSpacer = () => (<View style={{ width: LIST_OFFSET }} />)
 
   return (
     <View style={styles.container}>
@@ -54,12 +58,14 @@ export default function HorizontalPicker(props) {
         data={range}
         renderItem={renderItem}
         getItemLayout={(data, index) => (
-          { length: itemWidth, offset: itemWidth * index, index }
+          { length: ITEM_WIDTH, offset: LIST_OFFSET + ITEM_WIDTH * index, index }
         )}
-        initialScrollIndex={getInitialScrollIndex()}
+        initialScrollIndex={getInitialScrollIndex() - 3}
+        ListHeaderComponent={flatlistSpacer()}
+        ListFooterComponent={flatlistSpacer()}
       />
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
