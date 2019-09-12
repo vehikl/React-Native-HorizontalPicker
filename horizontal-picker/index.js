@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { View, Text, FlatList, TouchableHighlight, StyleSheet } from 'react-native'
 
 export default function HorizontalPicker(props) {
@@ -6,10 +6,18 @@ export default function HorizontalPicker(props) {
   const { min, max } = props;
   const length = max - min + 1;
   const range = new Array(length).fill().map((_, index) => index + min);
+  const itemWidth = 60;
 
-  function updateSelectedNumber(item) {
-    setSelectedNumber(item);
-    props.onValueChange(item);
+  const flatListRef = useRef(null);
+
+  function updateSelectedNumber(foo) {
+    setSelectedNumber(foo.item);
+    props.onValueChange(foo.item);
+    const index = range.findIndex((number) => number === foo.item);
+
+    if (flatListRef.current) {
+      flatListRef.current.scrollToIndex({index, viewPosition: 0.5});
+    }
   }
 
   function renderItem({ item }) {
@@ -19,11 +27,11 @@ export default function HorizontalPicker(props) {
     }
 
     return (
-      <TouchableHighlight onPress={() => updateSelectedNumber(item)}>
+      <TouchableHighlight onPress={() => updateSelectedNumber({ item })}>
         <View style={styles.numberDisplay}>
           {indicatorArrow}
           <Text style={styles.numberText}>{item}</Text>
-          <Text>|</Text>
+          <Text style={styles.numberText}>|</Text>
         </View>
       </TouchableHighlight>
     );
@@ -40,12 +48,13 @@ export default function HorizontalPicker(props) {
         <Text style={styles.centerLine} >|</Text>
       </View>
       <FlatList
+        ref={flatListRef}
         horizontal
         keyExtractor={(item, index) => `${item}-${index}`}
         data={range}
         renderItem={renderItem}
         getItemLayout={(data, index) => (
-          { length: 60, offset: 64 * index, index }
+          { length: itemWidth, offset: itemWidth * index, index }
         )}
         initialScrollIndex={getInitialScrollIndex()}
       />
@@ -58,11 +67,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 60
   },
   numberText: {
     fontSize: 24,
     color: 'rgba(255, 255, 255, 0.8)',
+    width: 60,
+    textAlign: "center"
   },
   container: {
     width: '100%',
