@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { View, Text, FlatList, TouchableHighlight, StyleSheet } from 'react-native'
 
 const LIST_OFFSET = 180;
@@ -18,7 +18,7 @@ export default function HorizontalPicker(props) {
     const index = range.findIndex((number) => number === foo.item);
 
     if (flatListRef.current) {
-      flatListRef.current.scrollToIndex({ index, viewPosition: 0.5});
+      flatListRef.current.scrollToIndex({ index, viewPosition: 0.5 });
     }
   }
 
@@ -37,6 +37,20 @@ export default function HorizontalPicker(props) {
         </View>
       </TouchableHighlight>
     );
+  }
+
+  handleScroll = ({ nativeEvent }) => {
+    const viewPortWidth = nativeEvent.layoutMeasurement.width;
+    const contentOffsetX = nativeEvent.contentOffset.x;
+
+    const halfOfViewport = viewPortWidth / 2;
+    const middlepoint = contentOffsetX + halfOfViewport;
+
+    const withoutOffset = middlepoint - LIST_OFFSET;
+    const calculatedIndex = Math.floor(withoutOffset / ITEM_WIDTH);
+
+    const value = range[calculatedIndex];
+    setSelectedNumber(value);
   }
 
   function getInitialScrollIndex() {
@@ -60,9 +74,10 @@ export default function HorizontalPicker(props) {
         getItemLayout={(data, index) => (
           { length: ITEM_WIDTH, offset: LIST_OFFSET + ITEM_WIDTH * index, index }
         )}
-        initialScrollIndex={getInitialScrollIndex() - 3}
+        initialScrollIndex={getInitialScrollIndex() - 2.6}
         ListHeaderComponent={flatlistSpacer()}
         ListFooterComponent={flatlistSpacer()}
+        onScroll={(e) => { handleScroll(e) }}
       />
     </View>
   );
