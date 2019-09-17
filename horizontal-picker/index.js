@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, FlatList, TouchableHighlight, StyleSheet } from 'react-native'
+import { View, Text, FlatList, TouchableHighlight, StyleSheet, Dimensions } from 'react-native'
 
-const LIST_OFFSET = 180;
 const ITEM_WIDTH = 60;
+const LIST_OFFSET = (Dimensions.get('screen').width / 2) - (ITEM_WIDTH / 2);
 
 export default function HorizontalPicker(props) {
   const [selectedNumber, setSelectedNumber] = useState(props.initialValue);
@@ -16,7 +16,10 @@ export default function HorizontalPicker(props) {
     setSelectedNumber(foo.item);
     props.onValueChange(foo.item);
     const index = range.findIndex((number) => number === foo.item);
+    centerOnIndex(index);
+  }
 
+  function centerOnIndex(index) {
     if (flatListRef.current) {
       flatListRef.current.scrollToIndex({ index, viewPosition: 0.5 });
     }
@@ -77,7 +80,7 @@ export default function HorizontalPicker(props) {
         initialScrollIndex={getInitialScrollIndex() - 2.6}
         ListHeaderComponent={flatlistSpacer()}
         ListFooterComponent={flatlistSpacer()}
-        onScroll={(e) => { handleScroll(e) }}
+        onScroll={handleScroll}
       />
     </View>
   );
