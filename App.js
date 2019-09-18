@@ -7,7 +7,11 @@ console.disableYellowBox = true;
 export default function App() {
   return (
     <SafeAreaView style={styles.container}>
-      <HorizontalPicker min={1} max={50} initialValue={10}/>
+      <HorizontalPicker
+        min={1}
+        max={50}
+        initialValue={10}
+      />
     </SafeAreaView>
   );
 }
