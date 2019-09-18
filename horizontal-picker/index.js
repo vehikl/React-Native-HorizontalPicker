@@ -15,7 +15,7 @@ export default function HorizontalPicker(props) {
 
   const flatListRef = useRef(null);
 
-  function updateSelectedNumber({ item: number }) {
+  function updateSelectedNumber(number) {
     setSelectedNumber(number);
     props.onValueChange(number);
     const index = range.findIndex(candidate => candidate === number);
