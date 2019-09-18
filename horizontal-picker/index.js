@@ -15,10 +15,10 @@ export default function HorizontalPicker(props) {
 
   const flatListRef = useRef(null);
 
-  function updateSelectedNumber(foo) {
-    setSelectedNumber(foo.item);
-    props.onValueChange(foo.item);
-    const index = range.findIndex((number) => number === foo.item);
+  function updateSelectedNumber({ item: number }) {
+    setSelectedNumber(number);
+    props.onValueChange(number);
+    const index = range.findIndex(candidate => candidate === number);
     centerOnIndex(index);
   }
 
@@ -30,7 +30,7 @@ export default function HorizontalPicker(props) {
 
   const renderItem = ({ item }) => (
     <ListItemNumber
-      item={item}
+      number={item}
       textColor={props.textColor}
       updateSelectedNumber={updateSelectedNumber}
     />

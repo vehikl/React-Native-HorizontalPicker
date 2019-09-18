@@ -2,13 +2,14 @@ import React from 'react';
 import { TouchableHighlight, View, Text, StyleSheet } from 'react-native';
 
 function ListItemNumber(props) {
-  const { item, updateSelectedNumber } = props;
+  const { updateSelectedNumber } = props;
+  const number = props.number;
   const styles = createStyles(props);
 
   return (
-    <TouchableHighlight onPress={() => updateSelectedNumber({ item })}>
+    <TouchableHighlight onPress={() => updateSelectedNumber({ item: number })}>
       <View style={styles.numberDisplay}>
-        <Text style={styles.numberText}>{item}</Text>
+        <Text style={styles.numberText}>{number}</Text>
         <Text style={styles.numberText}>|</Text>
       </View>
     </TouchableHighlight>
