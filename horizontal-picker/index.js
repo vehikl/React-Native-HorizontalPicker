@@ -31,7 +31,6 @@ export default function HorizontalPicker(props) {
   const renderItem = ({ item }) => (
     <ListItemNumber
       item={item}
-      selectedNumber={selectedNumber}
       updateSelectedNumber={updateSelectedNumber}
     />
   )

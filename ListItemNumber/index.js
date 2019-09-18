@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableHighlight, View, Text, StyleSheet } from 'react-native';
 
 function ListItemNumber(props) {
-  const {item, selectedNumber, updateSelectedNumber} = props
+  const {item, updateSelectedNumber} = props
 
   return (
     <TouchableHighlight onPress={() => updateSelectedNumber({ item })}>
