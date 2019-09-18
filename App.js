@@ -1,8 +1,16 @@
 import React from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
 
-import HorizontalPicker from './horizontal-picker'
+import HorizontalPicker from './horizontal-picker';
+
 console.disableYellowBox = true;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+});
 
 export default function App() {
   return (
@@ -15,10 +23,3 @@ export default function App() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});
