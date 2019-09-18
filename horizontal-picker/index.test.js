@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  Image,
-  StyleSheet,
-  Text,
-  TouchableHighlight,
-  View } from 'react-native';
-import { render, fireEvent, waitForElement } from 'react-native-testing-library';
+import { render, fireEvent } from 'react-native-testing-library';
 import HorizontalPicker from './index';
 
 describe('horizontal-picker', () => {
@@ -47,7 +41,13 @@ describe('horizontal-picker', () => {
 
   it('calls onChange with the correct value', () => {
     const onValueChange = jest.fn();
-    const { getByText } = render(<HorizontalPicker min={1} max={5} onValueChange={onValueChange} />);
+    const { getByText } = render(
+      <HorizontalPicker
+        min={1}
+        max={5}
+        onValueChange={onValueChange}
+      />,
+    );
 
     fireEvent.press(getByText('3'));
     expect(onValueChange).toHaveBeenCalledWith(3);
@@ -60,10 +60,10 @@ describe('horizontal-picker', () => {
         min={1}
         max={5}
         initialValue={initialValue}
-      />
+      />,
     );
 
-    const selectedNumber = getByTestId('number')
-    expect(selectedNumber.props.children).toBe(initialValue)
-  })
+    const selectedNumber = getByTestId('number');
+    expect(selectedNumber.props.children).toBe(initialValue);
+  });
 });
