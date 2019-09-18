@@ -1,5 +1,7 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, FlatList, TouchableHighlight, StyleSheet, Dimensions } from 'react-native'
+import { View, Text, FlatList, StyleSheet, Dimensions } from 'react-native'
+
+import ListItemNumber from '../ListItemNumber'
 
 const ITEM_WIDTH = 60;
 const LIST_OFFSET = (Dimensions.get('screen').width / 2) - (ITEM_WIDTH / 2);
@@ -25,22 +27,13 @@ export default function HorizontalPicker(props) {
     }
   }
 
-  function renderItem({ item }) {
-    let indicatorArrow;
-    if (item === selectedNumber) {
-      indicatorArrow = (<Text>^</Text>);
-    }
-
-    return (
-      <TouchableHighlight onPress={() => updateSelectedNumber({ item })}>
-        <View style={styles.numberDisplay}>
-          {indicatorArrow}
-          <Text style={styles.numberText}>{item}</Text>
-          <Text style={styles.numberText}>|</Text>
-        </View>
-      </TouchableHighlight>
-    );
-  }
+  const renderItem = ({ item }) => (
+    <ListItemNumber
+      item={item}
+      selectedNumber={selectedNumber}
+      updateSelectedNumber={updateSelectedNumber}
+    />
+  )
 
   handleScroll = ({ nativeEvent }) => {
     const viewPortWidth = nativeEvent.layoutMeasurement.width;
@@ -71,6 +64,7 @@ export default function HorizontalPicker(props) {
       <FlatList
         ref={flatListRef}
         horizontal
+        bounces={false}
         keyExtractor={(item, index) => `${item}-${index}`}
         data={range}
         renderItem={renderItem}
@@ -87,17 +81,6 @@ export default function HorizontalPicker(props) {
 }
 
 const styles = StyleSheet.create({
-  numberDisplay: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  numberText: {
-    fontSize: 24,
-    color: 'rgba(255, 255, 255, 0.8)',
-    width: 60,
-    textAlign: "center"
-  },
   container: {
     width: '100%',
     backgroundColor: '#ff9966',
