@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { View, Text, FlatList, StyleSheet, Dimensions } from 'react-native'
 
-import ListItemNumber from '../ListItemNumber'
+import ListItemNumber from '../ListItemNumber';
 
 const ITEM_WIDTH = 60;
 const LIST_OFFSET = (Dimensions.get('screen').width / 2) - (ITEM_WIDTH / 2);
@@ -31,6 +31,7 @@ export default function HorizontalPicker(props) {
   const renderItem = ({ item }) => (
     <ListItemNumber
       item={item}
+      textColor={props.textColor}
       updateSelectedNumber={updateSelectedNumber}
     />
   )
@@ -80,7 +81,7 @@ export default function HorizontalPicker(props) {
   );
 }
 
-function createStyles({ backgroundColor }) {
+function createStyles({ backgroundColor, textColor }) {
   return StyleSheet.create({
     container: {
       width: '100%',
@@ -100,12 +101,12 @@ function createStyles({ backgroundColor }) {
     selectedItem: {
       paddingTop: 80,
       fontSize: 60,
-      color: 'white',
+      color: textColor,
       fontWeight: '800',
     },
     centerLine: {
       paddingBottom: 50,
-      color: 'white',
+      color: textColor,
       fontWeight: '100',
       fontSize: 120,
     },
@@ -114,5 +115,6 @@ function createStyles({ backgroundColor }) {
 
 HorizontalPicker.defaultProps = {
   backgroundColor: '#ff9966',
+  textColor: 'rgba(255, 255, 255, 0.8)',
   onValueChange: () => { },
 };

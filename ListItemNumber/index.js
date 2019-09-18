@@ -2,7 +2,8 @@ import React from 'react';
 import { TouchableHighlight, View, Text, StyleSheet } from 'react-native';
 
 function ListItemNumber(props) {
-  const {item, updateSelectedNumber} = props
+  const { item, updateSelectedNumber } = props;
+  const styles = createStyles(props);
 
   return (
     <TouchableHighlight onPress={() => updateSelectedNumber({ item })}>
@@ -13,19 +14,24 @@ function ListItemNumber(props) {
     </TouchableHighlight>
   );
 }
+function createStyles({ textColor }) {
+  return StyleSheet.create({
+    numberDisplay: {
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    numberText: {
+      fontSize: 24,
+      color: textColor,
+      width: 60,
+      textAlign: "center"
+    },
+  });
+}
 
-const styles = StyleSheet.create({
-  numberDisplay: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  numberText: {
-    fontSize: 24,
-    color: 'rgba(255, 255, 255, 0.8)',
-    width: 60,
-    textAlign: "center"
-  },
-})
+ListItemNumber.defaultProps = {
+  textColor: 'rgba(255, 255, 255, 0.8)'
+}
 
 export default ListItemNumber
