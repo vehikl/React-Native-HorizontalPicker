@@ -11,6 +11,7 @@ export default function HorizontalPicker(props) {
   const { min, max } = props;
   const length = max - min + 1;
   const range = new Array(length).fill().map((_, index) => index + min);
+  const styles = createStyles(props);
 
   const flatListRef = useRef(null);
 
@@ -80,36 +81,39 @@ export default function HorizontalPicker(props) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    backgroundColor: '#ff9966',
-    borderRadius: 50,
-    borderTopLeftRadius: 0,
-    borderTopRightRadius: 0,
-    paddingVertical: 80,
-  },
-  selectionContainer: {
-    width: '100%',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+function createStyles({ backgroundColor }) {
+  return StyleSheet.create({
+    container: {
+      width: '100%',
+      backgroundColor: backgroundColor,
+      borderRadius: 50,
+      borderTopLeftRadius: 0,
+      borderTopRightRadius: 0,
+      paddingVertical: 80,
+    },
+    selectionContainer: {
+      width: '100%',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
 
-  },
-  selectedItem: {
-    paddingTop: 80,
-    fontSize: 60,
-    color: 'white',
-    fontWeight: '800',
-  },
-  centerLine: {
-    paddingBottom: 50,
-    color: 'white',
-    fontWeight: '100',
-    fontSize: 120,
-  },
-});
+    },
+    selectedItem: {
+      paddingTop: 80,
+      fontSize: 60,
+      color: 'white',
+      fontWeight: '800',
+    },
+    centerLine: {
+      paddingBottom: 50,
+      color: 'white',
+      fontWeight: '100',
+      fontSize: 120,
+    },
+  });
+}
 
 HorizontalPicker.defaultProps = {
+  backgroundColor: '#ff9966',
   onValueChange: () => { },
 };
