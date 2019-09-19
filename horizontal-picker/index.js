@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, Dimensions } from 'react-native'
 
 import ListItemNumber from '../ListItemNumber';
@@ -8,10 +8,24 @@ const LIST_OFFSET = (Dimensions.get('screen').width / 2) - (ITEM_WIDTH / 2);
 
 export default function HorizontalPicker(props) {
   const [selectedNumber, setSelectedNumber] = useState(props.initialValue);
+  const [componentWidth, setComponentWidth] = useState(0);
+  const [listOffset, setListOffset] = useState(0);
   const { min, max } = props;
   const length = max - min + 1;
   const range = new Array(length).fill().map((_, index) => index + min);
   const styles = createStyles(props);
+
+  useEffect(() => {
+    console.log('right moment')
+    updateSelectedNumber(selectedNumber)
+  }, [listOffset])
+
+  const onLayout = ({ nativeEvent }) => {
+    const width = nativeEvent.layout.width;
+    setComponentWidth(width);
+    setListOffset((width / 2) - (ITEM_WIDTH / 2));
+    console.log({ width });
+   };
 
   const flatListRef = useRef(null);
 
@@ -36,14 +50,14 @@ export default function HorizontalPicker(props) {
     />
   )
 
-  handleScroll = ({ nativeEvent }) => {
+    const handleScroll = ({ nativeEvent }) => {
     const viewPortWidth = nativeEvent.layoutMeasurement.width;
     const contentOffsetX = nativeEvent.contentOffset.x;
 
     const halfOfViewport = viewPortWidth / 2;
     const middlepoint = contentOffsetX + halfOfViewport;
 
-    const withoutOffset = middlepoint - LIST_OFFSET;
+    const withoutOffset = middlepoint - listOffset;
     const calculatedIndex = Math.floor(withoutOffset / ITEM_WIDTH);
 
     const value = range[calculatedIndex];
@@ -54,7 +68,9 @@ export default function HorizontalPicker(props) {
     return range.findIndex((item) => item === props.initialValue);
   }
 
-  const flatlistSpacer = () => (<View style={{ width: LIST_OFFSET }} />)
+  const flatlistSpacer = () => (<View style={{ width: listOffset }} />)
+
+  const tacos = componentWidth / ITEM_WIDTH / 2;
 
   return (
     <View style={styles.container}>
@@ -69,10 +85,11 @@ export default function HorizontalPicker(props) {
         keyExtractor={(item, index) => `${item}-${index}`}
         data={range}
         renderItem={renderItem}
+        onLayout={onLayout}
         getItemLayout={(data, index) => (
-          { length: ITEM_WIDTH, offset: LIST_OFFSET + ITEM_WIDTH * index, index }
+          { length: ITEM_WIDTH, offset: listOffset + ITEM_WIDTH * index, index }
         )}
-        initialScrollIndex={getInitialScrollIndex() - 2.6}
+        initialScrollIndex={getInitialScrollIndex()}
         ListHeaderComponent={flatlistSpacer()}
         ListFooterComponent={flatlistSpacer()}
         onScroll={handleScroll}

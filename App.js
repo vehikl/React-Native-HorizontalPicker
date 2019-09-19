@@ -10,7 +10,7 @@ export default function App() {
       <HorizontalPicker
         min={1}
         max={50}
-        initialValue={10}
+        initialValue={11}
       />
     </SafeAreaView>
   );
@@ -20,5 +20,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    // width:250,
   },
 });
