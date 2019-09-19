@@ -29,14 +29,21 @@ export default function HorizontalPicker(props) {
   function updateSelectedNumber(number) {
     setSelectedNumber(number);
     props.onValueChange(number);
-    const index = range.findIndex(candidate => candidate === number);
-    centerOnIndex(index);
+    centerOnIndex(getSelectedIndexForNumber(number));
   }
 
   function centerOnIndex(index) {
-    if (flatListRef.current) {
+    if (flatListRef.current && index > -1) {
       flatListRef.current.scrollToIndex({ index, viewPosition: 0.5 });
     }
+  }
+
+  function getSelectedIndexForNumber(number) {
+    return range.findIndex(candidate => candidate === number);
+  }
+
+  function handleScrollEnd() {
+    centerOnIndex(getSelectedIndexForNumber(selectedNumber));
   }
 
   const renderItem = ({ item }) => (
@@ -83,6 +90,7 @@ export default function HorizontalPicker(props) {
         data={range}
         renderItem={renderItem}
         onLayout={onLayout}
+        onMomentumScrollEnd={handleScrollEnd}
         getItemLayout={(data, index) => (
           { length: ITEM_WIDTH, offset: listOffset + ITEM_WIDTH * index, index }
         )}
