@@ -1,10 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet, Dimensions } from 'react-native'
+import { View, Text, FlatList, StyleSheet } from 'react-native'
 
 import ListItemNumber from '../ListItemNumber';
 
 const ITEM_WIDTH = 60;
-const LIST_OFFSET = (Dimensions.get('screen').width / 2) - (ITEM_WIDTH / 2);
 
 export default function HorizontalPicker(props) {
   const [selectedNumber, setSelectedNumber] = useState(props.initialValue);
@@ -16,7 +15,6 @@ export default function HorizontalPicker(props) {
   const styles = createStyles(props);
 
   useEffect(() => {
-    console.log('right moment')
     updateSelectedNumber(selectedNumber)
   }, [listOffset])
 
@@ -24,8 +22,7 @@ export default function HorizontalPicker(props) {
     const width = nativeEvent.layout.width;
     setComponentWidth(width);
     setListOffset((width / 2) - (ITEM_WIDTH / 2));
-    console.log({ width });
-   };
+  };
 
   const flatListRef = useRef(null);
 
@@ -50,7 +47,7 @@ export default function HorizontalPicker(props) {
     />
   )
 
-    const handleScroll = ({ nativeEvent }) => {
+  const handleScroll = ({ nativeEvent }) => {
     const viewPortWidth = nativeEvent.layoutMeasurement.width;
     const contentOffsetX = nativeEvent.contentOffset.x;
 
