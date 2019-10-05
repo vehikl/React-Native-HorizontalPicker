@@ -7,7 +7,6 @@ const ITEM_WIDTH = 60;
 
 export default function HorizontalPicker(props) {
   const [selectedNumber, setSelectedNumber] = useState(props.initialValue);
-  const [componentWidth, setComponentWidth] = useState(0);
   const [listOffset, setListOffset] = useState(0);
   const { min, max } = props;
   const length = max - min + 1;
@@ -20,7 +19,6 @@ export default function HorizontalPicker(props) {
 
   const onLayout = ({ nativeEvent }) => {
     const width = nativeEvent.layout.width;
-    setComponentWidth(width);
     setListOffset((width / 2) - (ITEM_WIDTH / 2));
   };
 
