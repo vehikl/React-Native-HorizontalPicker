@@ -74,8 +74,6 @@ export default function HorizontalPicker(props) {
 
   const flatlistSpacer = () => (<View style={{ width: listOffset }} />)
 
-  const tacos = componentWidth / ITEM_WIDTH / 2;
-
   return (
     <View style={styles.container}>
       <View style={styles.selectionContainer}>
